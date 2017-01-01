@@ -11,7 +11,7 @@ window.Breakout.BrickField = (function(Game) {
     columns: 10,
     brickHeight: 20,
     brickWidth: 75,
-    brickSpacing: 30,
+    brickSpacing: 50,
     brickPadding: 10
   };
 
@@ -37,10 +37,10 @@ window.Breakout.BrickField = (function(Game) {
         var b = bricks[c][r];
 
         if(b.isHit == false) {
-          if(Ball.getX() > b.x &&
-             Ball.getX() < b.x + settings.brickWidth &&
-             Ball.getY() > b.y &&
-             Ball.getY() < b.y + settings.brickHeight) {
+          if(Ball.getX() + Ball.ballRadius > b.x &&
+             Ball.getX() - Ball.ballRadius < b.x + settings.brickWidth &&
+             Ball.getY() + Ball.ballRadius > b.y &&
+             Ball.getY() - Ball.ballRadius < b.y + settings.brickHeight) {
 
             Ball.collide();
             b.isHit = true;

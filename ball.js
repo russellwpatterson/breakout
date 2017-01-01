@@ -10,8 +10,10 @@ window.Breakout.Ball = (function(Game) {
     ballColor: "#FFFFFF",
     startingVelocityX: 5.0,
     startingVelocityY: -5.0,
-    velocityChange: 0.5
+    velocityChange: 1.25
   };
+
+  var hasDoneSpeedIncrease = false;
 
   var coordinates = {
     x: 0,
@@ -49,6 +51,8 @@ window.Breakout.Ball = (function(Game) {
         x: settings.startingVelocityX,
         y: settings.startingVelocityY
       };
+
+      hasDoneSpeedIncrease = false;
     } else {
       velocity = {
         x: Math.abs(velocity.x),
@@ -69,6 +73,14 @@ window.Breakout.Ball = (function(Game) {
     velocity.y = -velocity.y;
   }
 
+  function increaseSpeed() {
+    if(!hasDoneSpeedIncrease) {
+      velocity.x = velocity.x * settings.velocityChange;
+      velocity.y = velocity.y * settings.velocityChange;
+      hasDoneSpeedIncrease = true;
+    }
+  }
+
   function updateLocation() {
     var canvas = Game.getCanvas();
 
@@ -81,6 +93,7 @@ window.Breakout.Ball = (function(Game) {
     if(coordinates.y + velocity.y < settings.ballRadius) {
       // We've hit the top of the canvas. We should bounce.
       velocity.y = -velocity.y;
+      increaseSpeed();
     }
 
     if(coordinates.y + velocity.y > canvas.height - settings.ballRadius) {
@@ -98,6 +111,7 @@ window.Breakout.Ball = (function(Game) {
     reset: reset,
     getX: getX,
     getY: getY,
-    collide: collide
+    collide: collide,
+    ballRadius: settings.ballRadius
   };
 })(window.Breakout.Game);

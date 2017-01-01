@@ -69,14 +69,21 @@ window.Breakout.Paddle = (function(Game, Ball) {
   }
 
   function isCollision() {
-    if (Ball.getY() != Game.getCanvas().height - settings.paddleHeight) {
+
+    if (Ball.getY() + Ball.ballRadius < Game.getCanvas().height - settings.paddleHeight) {
       // If the ball isn't at a place where it could be touching the paddle,
       // it's definitely not.
       return false;
     }
+    //
+    // if (Ball.getY() != Game.getCanvas().height - settings.paddleHeight) {
+    //   // If the ball isn't at a place where it could be touching the paddle,
+    //   // it's definitely not.
+    //   return false;
+    // }
 
-    if (Ball.getX() > coordinateX &&
-        Ball.getX() < coordinateX + settings.paddleWidth) {
+    if (Ball.getX() + Ball.ballRadius > coordinateX &&
+        Ball.getX() - Ball.ballRadius < coordinateX + settings.paddleWidth) {
       // If the ball is at a place where it could be touching the paddle,
       // it needs to be within the width of the paddle.
       return true;
