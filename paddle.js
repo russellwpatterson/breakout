@@ -7,9 +7,9 @@ window.Breakout.Paddle = (function(Game, Ball) {
 
   var settings = {
     paddleColor: "#FFFFFF",
-    paddleWidth: 75,
-    paddleHeight: 10,
-    paddleMovementSpeed: 7
+    paddleWidth: 80,
+    paddleHeight: 14,
+    paddleMovementSpeed: 10
   };
 
   var coordinateX = 0;

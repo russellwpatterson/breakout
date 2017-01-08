@@ -7,15 +7,32 @@ window.Breakout.BrickField = (function(Game) {
 
   var settings = {
     brickColors: ["red", "orange", "yellow", "green", "blue", "purple"],
+    brickHeight: 20,
+    brickSpacing: 10,
+    brickFieldBorder: 30,
+
     rows: 6,
     columns: 10,
-    brickHeight: 20,
-    brickWidth: 75,
-    brickSpacing: 50,
-    brickPadding: 10
+    brickWidth: 75
   };
 
-  var bricks = createBricks();
+  var bricks = [];
+
+  function init(canvasWidth, canvasHeight, rows, columns) {
+
+    settings.rows = rows;
+    settings.columns = columns;
+
+    var brickWidth = (canvasWidth - (columns * settings.brickSpacing) - (2 * settings.brickFieldBorder)) / columns;
+
+    settings.brickWidth = brickWidth;
+
+    bricks = createBricks();
+  }
+
+  function reset() {
+    bricks = createBricks();
+  }
 
   function draw() {
     var context = Game.getContext();
@@ -51,6 +68,18 @@ window.Breakout.BrickField = (function(Game) {
     }
   }
 
+  function isCleared() {
+    for (var col = 0; col < settings.columns; col++) {
+      for (var row = 0; row < settings.rows; row++) {
+        if(bricks[col][row].isHit == false) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   function createBricks() {
     var brickField = [];
 
@@ -58,8 +87,8 @@ window.Breakout.BrickField = (function(Game) {
       var brickColumn = [];
 
       for (var row = 0; row < settings.rows; row++) {
-        var coordinateX = (col * (settings.brickWidth + settings.brickPadding)) + settings.brickSpacing;
-        var coordinateY = (row * (settings.brickHeight + settings.brickPadding)) + settings.brickSpacing;
+        var coordinateX = col * (settings.brickWidth + settings.brickSpacing) + settings.brickFieldBorder;
+        var coordinateY = row * (settings.brickHeight + settings.brickSpacing) + settings.brickFieldBorder;
 
         brickColumn.push({
           x: coordinateX,
@@ -87,7 +116,10 @@ window.Breakout.BrickField = (function(Game) {
   }
 
   return {
+    init: init,
     draw: draw,
-    handleCollisions: handleCollisions
+    handleCollisions: handleCollisions,
+    isCleared: isCleared,
+    reset: reset
   };
 })(window.Breakout.Game);

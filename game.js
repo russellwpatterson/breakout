@@ -6,7 +6,9 @@ window.Breakout.Game = (function() {
   "use strict";
 
   var settings = {
-    maxLives: 3
+    maxLives: 3,
+    brickRows: 6,
+    brickColumns: 10
   };
 
   var currentScore = 0;
@@ -22,6 +24,7 @@ window.Breakout.Game = (function() {
 
     window.Breakout.Ball.init();
     window.Breakout.Paddle.init();
+    window.Breakout.BrickField.init(canvas.width, canvas.height, settings.brickRows, settings.brickColumns);
 
     window.requestAnimationFrame(run);
   }
@@ -51,8 +54,10 @@ window.Breakout.Game = (function() {
 
   function reset() {
     currentScore = 0;
-    currentLives = maxLives;
-    Ball.reset(true);
+    currentLives = settings.maxLives;
+
+    window.Breakout.Ball.reset(true);
+    window.Breakout.BrickField.reset();
   }
 
   function getCanvas() {
@@ -86,6 +91,10 @@ window.Breakout.Game = (function() {
     currentScore++;
 
     // is level over?
+    if(window.Breakout.BrickField.isCleared()) {
+      alert("Congratulations! You've cleared the level!");
+      reset();
+    }
   }
 
   return {
