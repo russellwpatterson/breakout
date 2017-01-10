@@ -1,4 +1,4 @@
-if (typeof window.Breakout == "undefined") {
+if (typeof window.Breakout === "undefined") {
   window.Breakout = {};
 }
 
