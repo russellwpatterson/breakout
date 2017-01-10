@@ -14,11 +14,13 @@ window.Breakout.BrickField = (function(Game) {
 
   var bricks = [];
 
-  function init(canvasWidth, canvasHeight, rows, columns) {
-    settings.rows = rows || 6;
-    settings.columns = columns || 10;
+  function init(canvasWidth, canvasHeight, numberOfRows, numberOfColumns) {
+    settings.rows = numberOfRows || 6;
+    settings.columns = numberOfColumns || 10;
 
-    var brickWidth = (canvasWidth - (columns * settings.brickSpacing) - (2 * settings.brickFieldBorder)) / columns;
+    var brickWidth = (canvasWidth -
+      (numberOfColumns * settings.brickSpacing) -
+      (2 * settings.brickFieldBorder)) / numberOfColumns;
 
     settings.brickWidth = brickWidth;
 
