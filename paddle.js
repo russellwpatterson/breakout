@@ -9,7 +9,7 @@ window.Breakout.Paddle = (function(Game, Ball) {
     paddleColor: "#FFFFFF",
     paddleWidth: 80,
     paddleHeight: 14,
-    paddleMovementSpeed: 10
+    paddleMovementSpeed: 12
   };
 
   var coordinateX = 0;
@@ -69,18 +69,11 @@ window.Breakout.Paddle = (function(Game, Ball) {
   }
 
   function isCollision() {
-
     if (Ball.getY() + Ball.ballRadius < Game.getCanvas().height - settings.paddleHeight) {
       // If the ball isn't at a place where it could be touching the paddle,
       // it's definitely not.
       return false;
     }
-    //
-    // if (Ball.getY() != Game.getCanvas().height - settings.paddleHeight) {
-    //   // If the ball isn't at a place where it could be touching the paddle,
-    //   // it's definitely not.
-    //   return false;
-    // }
 
     if (Ball.getX() + Ball.ballRadius > coordinateX &&
         Ball.getX() - Ball.ballRadius < coordinateX + settings.paddleWidth) {
@@ -115,18 +108,18 @@ window.Breakout.Paddle = (function(Game, Ball) {
     }
   }
 
-  function mouseMoveHandler(e) {
-    var canvas = Game.getCanvas();
-    var relativeX = e.clientX - canvas.offsetLeft;
-    if(relativeX > 0 && relativeX < canvas.width) {
-      coordinateX = relativeX - settings.paddleWidth / 2;
-    }
-  }
+  // function mouseMoveHandler(e) {
+  //   var canvas = Game.getCanvas();
+  //   var relativeX = e.clientX - canvas.offsetLeft;
+  //   if(relativeX > 0 && relativeX < canvas.width) {
+  //     coordinateX = relativeX - settings.paddleWidth / 2;
+  //   }
+  // }
 
   function setupEvents() {
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
-    document.addEventListener("mousemove", mouseMoveHandler, false);
+    //document.addEventListener("mousemove", mouseMoveHandler, false);
   }
 
   return {

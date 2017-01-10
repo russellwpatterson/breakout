@@ -6,13 +6,9 @@ window.Breakout.Game = (function() {
   "use strict";
 
   var settings = {
-    maxLives: 3,
     brickRows: 6,
     brickColumns: 10
   };
-
-  var currentScore = 0;
-  var currentLives = 0;
 
   var canvas = null;
   var context = null;
@@ -31,20 +27,19 @@ window.Breakout.Game = (function() {
 
   function run() {
     clearCanvas();
-    // do all the things here.
-    // draw all the things
+
     window.Breakout.BrickField.draw();
     window.Breakout.Ball.draw();
     window.Breakout.Paddle.draw();
-    // check for collisions
 
+    // check for collisions
     if (window.Breakout.Paddle.isCollision()) {
       window.Breakout.Ball.collide();
     }
 
     window.Breakout.BrickField.handleCollisions(window.Breakout.Ball);
 
-    // To continue drawing.
+    // To continue drawing, request the next frame.
     window.requestAnimationFrame(run);
   }
 
@@ -53,9 +48,6 @@ window.Breakout.Game = (function() {
   }
 
   function reset() {
-    currentScore = 0;
-    currentLives = settings.maxLives;
-
     window.Breakout.Ball.reset(true);
     window.Breakout.BrickField.reset();
   }
@@ -68,28 +60,12 @@ window.Breakout.Game = (function() {
     return context;
   }
 
-  function getCurrentScore() {
-    return currentScore;
-  }
-
-  function getCurrentLives() {
-    return currentLives;
-  }
-
   function outOfBounds(Ball) {
-    if (--currentLives == 0) {
-      // TODO: Display a message?
-      reset();
-    }
-    else {
-      // Reset the ball.
-      Ball.reset();
-    }
+    // Reset the ball.
+    Ball.reset();
   }
 
   function hit() {
-    currentScore++;
-
     // is level over?
     if(window.Breakout.BrickField.isCleared()) {
       alert("Congratulations! You've cleared the level!");
@@ -101,8 +77,6 @@ window.Breakout.Game = (function() {
     init: init,
     getCanvas: getCanvas,
     getContext: getContext,
-    getCurrentScore: getCurrentScore,
-    getCurrentLives: getCurrentLives,
     outOfBounds: outOfBounds,
     hit: hit
   };

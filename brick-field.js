@@ -9,19 +9,14 @@ window.Breakout.BrickField = (function(Game) {
     brickColors: ["red", "orange", "yellow", "green", "blue", "purple"],
     brickHeight: 20,
     brickSpacing: 10,
-    brickFieldBorder: 30,
-
-    rows: 6,
-    columns: 10,
-    brickWidth: 75
+    brickFieldBorder: 30
   };
 
   var bricks = [];
 
   function init(canvasWidth, canvasHeight, rows, columns) {
-
-    settings.rows = rows;
-    settings.columns = columns;
+    settings.rows = rows || 6;
+    settings.columns = columns || 10;
 
     var brickWidth = (canvasWidth - (columns * settings.brickSpacing) - (2 * settings.brickFieldBorder)) / columns;
 
